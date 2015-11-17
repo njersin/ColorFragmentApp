@@ -18,6 +18,21 @@ public class ColorListFragment extends Fragment {
     private OnListItemSelectedListener mListItemSelectedListener;
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        mColorArray = new ArrayAdapter<>(this.getActivity(), R.layout.color_list_view_item, R.id.list_item);
+        mColorArray.add("Blue");
+        mColorArray.add("Green");
+
+        try {
+            mListItemSelectedListener = (OnListItemSelectedListener) activity;
+        } catch (ClassCastException cce) {
+            throw new ClassCastException(activity.toString() + " must implement OnListItemSelectedListener.");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.color_list_fragment, group, false);
@@ -33,21 +48,6 @@ public class ColorListFragment extends Fragment {
         });
 
         return v;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mColorArray = new ArrayAdapter<>(this.getActivity(), R.layout.color_list_view_item, R.id.list_item);
-        mColorArray.add("Blue");
-        mColorArray.add("Green");
-
-        try {
-            mListItemSelectedListener = (OnListItemSelectedListener) activity;
-        } catch (ClassCastException cce) {
-            throw new ClassCastException(activity.toString() + " must implement OnListItemSelectedListener.");
-        }
     }
 
 

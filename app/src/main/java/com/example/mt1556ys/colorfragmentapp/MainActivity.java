@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements ColorListFragment.OnListItemSelectedListener  {
 
     private ColorListFragment mColorListFragment;
+    private boolean mDualPane;
+    private int mCurrentItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,12 @@ public class MainActivity extends AppCompatActivity implements ColorListFragment
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(android.R.id.content, mColorListFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("currentItem", mCurrentItem);
     }
 
     @Override
